@@ -1,4 +1,5 @@
 import 'package:app_tarefas_parte2/components/task.dart';
+import 'package:app_tarefas_parte2/data/task_inherited.dart';
 import 'package:app_tarefas_parte2/screens/form_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +11,6 @@ class InitialScreen extends StatefulWidget {
 }
 
 class _InitialScreenState extends State<InitialScreen> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,21 +25,24 @@ class _InitialScreenState extends State<InitialScreen> {
       ),
       body: ListView(
         //scrollDirection: Axis.horizontal,
-        children: const [
-          Task('Aprender Flutter', 'assets/images/flutter.png', 4),
-          Task('Andar de Bike', 'assets/images/bike.webp', 2),
-          Task('Meditar', 'assets/images/meditar.jpeg', 5),
-          Task('Jogar', 'assets/images/jogar.jpg', 1),
-          Task('Ler', 'assets/images/ler.jpg', 3),
-          SizedBox(height: 80,)
-        ],
+        children: TaskInherited.of(context).taskList,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => FormScreen(),),);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (contextNew) => FormScreen(
+                taskContext: context,
+              ),
+            ),
+          );
         },
         backgroundColor: Colors.blue,
-        child: const Icon(Icons.add, color: Colors.white,),
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
       ),
     );
   }

@@ -1,7 +1,10 @@
+import 'package:app_tarefas_parte2/data/task_inherited.dart';
 import 'package:flutter/material.dart';
 
 class FormScreen extends StatefulWidget {
-  const FormScreen({super.key});
+  const FormScreen({super.key, required this.taskContext});
+
+  final BuildContext taskContext;
 
   @override
   State<FormScreen> createState() => _FormScreenState();
@@ -129,15 +132,21 @@ class _FormScreenState extends State<FormScreen> {
                               borderRadius: BorderRadius.circular(4)))),
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          print(nameController.text);
-                          print(int.parse(difficultyController.text));
-                          print(imageController.text);
+                          // print(nameController.text);
+                          // print(int.parse(difficultyController.text));
+                          // print(imageController.text);
+                          TaskInherited.of(widget.taskContext).newTask(
+                              nameController.text,
+                              imageController.text,
+                              int.parse(difficultyController.text)
+                          );
 
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(const SnackBar(
-                            content: Text('Salvando nova tarefa'),
-                            duration: Duration(milliseconds: 1000),
-                          ));
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Salvando nova tarefa'),
+                                duration: Duration(milliseconds: 1000),
+                              )
+                          );
                           Navigator.pop(context);
                         }
                       },
@@ -154,3 +163,5 @@ class _FormScreenState extends State<FormScreen> {
     );
   }
 }
+
+//"https://i.pinimg.com/originals/93/b8/49/93b8493226b6efba26fa3a813fda9a4d.png"
